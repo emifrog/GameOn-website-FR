@@ -23,16 +23,16 @@ body {
 
 p {
   margin-bottom: 0;
-  padding: 0.5vw;
+  padding: 0.2vw;
 }
 
 img {
-  padding-right: 1rem;
+  padding-right: 0.5rem;
 }
 
 .topnav {
   overflow: hidden;
-  margin: 3.5%;
+  padding: 2rem 0;
 }
 .header-logo {
     float: left;
@@ -59,9 +59,10 @@ img {
 }
 
 .topnav a.active {
-  background-color: #ff0000;
+  background-color: #FE142F;
   color: #ffffff;
   border-radius: 15px;
+  font-weight: 500;
 }
 
 .topnav .icon {
