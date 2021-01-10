@@ -7,9 +7,10 @@ function editNav() {
   }
 }
 
-// DOM Element
+// launch and close modal
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
+const formData = document.querySelectorAll(".formData");
 const closeModal = document.querySelectorAll(".close");
 
 // launch modal 
