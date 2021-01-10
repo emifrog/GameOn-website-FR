@@ -1,115 +1,143 @@
-// DOM Elements
-const modalBtn = document.querySelectorAll(".modal-btn");
-const prenom = document.getElementById('first');
-const nom = document.getElementById('last');
-const email = document.getElementById('email');
-const birthdate = document.getElementById('birthdate');
-const quantity = document.getElementById('quantity');
-const citySelector = document.getElementsByName("location");
-const termsCheckbox = document.getElementById('termsChecked');
+// Element DOM
+const form = document.getElementById("form");
+const prenom = document.getElementById("first");
+const nom = document.getElementById("last");
+const email = document.getElementById("email");
+const birthdate = document.getElementById("birthdate");
+const quantity = document.getElementById("quantity");
+const city = document.querySelectorAll("#city .checkbox-input")
+const citySelector = document.getElementById("city")
 const checkbox1 = document.getElementById("checkbox1");
-const error = document.getElementById('error');
-const error = document.getElementById('error2');
-const error = document.getElementById('error3');
+const input = document.getElementsByClassName("text-control");
 
-///////////////////////// FORM VALIDATION //////////////////////////////
-document.getElementById('modalBtn').addEventListener('submit', (e) => {
-    e.preventDefault();
-    //Functions stored inside a variable with arguments inside
-    let prenomOk = validateString(prenom.value, 2, error,"Veuillez entrer 2 caractères ou plus pour le champ du prenom.");
-    let nomOk = validateString(nom.value, 2, error2, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
-    let emailOk = checkEmail(email.value, error3, "Veuillez entre une adresse mail valid.");
-    let birthdateOk = validateString(birthdate.value, 2, error4, "Vous devez entrer votre date de naissance.");
-    let quantityOk = checkTournois(quantity.value, error5, "Veuillez entrer une valeur numerique");
-    let citySelectorOk = citySelectorFunction();
-    let termsAndConditionsOK = termsAndConditions(termsCheckbox, errorCheckbox, "Vous devez vérifier que vous acceptez les termes et conditions.");
-   
-    // Functions Called Here    
-    if(prenomOk && nomOk && emailOk && birthdateOk && quantityOk && citySelectorOk && termsAndConditionsOK ) {
-    //Close ModalBox and OPEN SuccesBox
-    const modalBox = document.querySelector(".bground");
-    const succesMessageBox = document.querySelector(".submbit-confirmation-bg");
-      modalBox.style.display = "none";
-      succesMessageBox.style.display = "block";  
-      //Close succesBox
-      document.querySelectorAll('.close-Succes').forEach(button =>{
-      button.addEventListener('click', button => {
-      if (succesMessage.style.display === "block"){
-            succesMessage.style.display = 'none';
-      }})});
-      //Reset the form  
-      document.getElementById('modalBtn').reset();
-    } 
-    return true;
-}) 
 
-///// Validate Prenom & Nom & Birthdate & Tournes //////
-function validateString(entry, size, errorElt, errorMessage) {
-  if ( entry.length < size ) {
-    errorElt.innerHTML = errorMessage;
-    errorElt.style.color = "red";
-    errorElt.style.fontSize = "0.8rem";
-    return false;
-  }else {
-    errorElt.innerHTML = " ";
+// Verification Prenom //
+const checkFirstName = () => {
+    if( prenom.value.trim().length < 2 || prenom.value.trim() === ""){
+        prenom.parentElement.setAttribute("data-error-visible", "true")
+        return false
+    }
+    prenom.parentElement.setAttribute("data-error-visible", "false")
     return true;
-  }
 }
 
-////// Validate EMAIL /////// 
-function checkEmail(email, errorElt, errorMessage ) {
-   let patern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-   if (!email.toLowerCase().match(patern) || email == '') {
-       errorElt.innerHTML = errorMessage;
-       errorElt.style.color = "red";
-       errorElt.style.fontSize = "0.8rem";
-       return false;
-   }else {
-       errorElt.innerHTML = "";
-       return true;
-   }
-}
-
-////// Validate Tournois //////
-function checkTournois(element, errorElt, errorMessage ) {
-  if(!/^[0-9]+$/.test(element)){
-    errorElt.innerHTML = errorMessage;
-    errorElt.style.color = "red";
-    errorElt.style.fontSize = "0.8rem";
-    return false;
-  }else {
-    errorElt.innerHTML = " ";
+// Verification Nom //
+const checkLastName = () => {
+    if( nom.value.trim().length < 2 || nom.value.trim() === ""){
+        nom.parentElement.setAttribute("data-error-visible", "true")
+        return false
+    }
+    nom.parentElement.setAttribute("data-error-visible", "false")
     return true;
-  }
 }
 
-////// Validate City selector ///////
-function citySelectorFunction() {
- let check1 = false;
- for(i=0; i<citySelector.length; i++) {
-   if (citySelector[i].checked) {
-      check1 = true;
-   }
- }
-   if (check1 == false) {
-        errorCity.innerHTML = "Vous devez choisir une option.";
-        errorCity.style.color = "red";
-        errorCity.style.fontSize = "0.8rem";
+// Verification EMAIL //
+const checkEmail = () => {
+    let regexEmail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+    if (email.value.trim().match(regexEmail)) {
+        email.parentElement.setAttribute("data-error-visible", "false")
+        return true; 
+    }else {
+        email.parentElement.setAttribute("data-error-visible", "true")
+        return false; 
+    }
+}
+
+// Verification Date de Naissance //
+const checkBirthday = () => {
+    if(birthdate.value.trim().length !== 10) {
+        birthdate.parentElement.setAttribute("data-error-visible", "true")
+        return false
+    }
+    birthdate.parentElement.setAttribute("data-error-visible", "false")
+    return true;
+}
+
+// Validation Nombre //
+const checkTypeNumber = () => {
+    console.log();
+    if(quantity.value.trim().length === 0 || isNaN(quantity.value.trim()) === true ||quantity.value.trim() < 0) {
+        quantity.parentElement.setAttribute("data-error-visible", "true")
         return false;
-   }else {
-        errorCity.innerHTML = " ";
+    }else {
+        quantity.parentElement.setAttribute("data-error-visible", "false")
         return true;
-   }
+    }
 }
 
-//////// Validate Terms and Conditions //////
-function termsAndConditions(checkboxTerms, errorElementSelect, errorMessage ) {
-  if(!checkboxTerms.checked) {
-    errorElementSelect.innerHTML = errorMessage;
-    errorElementSelect.style.color = "red";
-    errorElementSelect.style.fontSize = "0.8rem";
-    return false;
-  }
-    errorElementSelect.innerHTML = "";
+// Validation Selection Ville //
+const checkCity = () => {
+    citySelector.setAttribute("data-error-visible", "true")
+    for (let i = 0; i < city.length; i++) {
+        if(city[i].checked) {
+            citySelector.setAttribute("data-error-visible", "false")
+            return true
+        }
+    }
+    return false
+}
+
+// Validation Condition d'utilisations Generales (CHECKED) //
+const checkboxChecked = () => {
+    if(checkbox1.checked === false) {
+        checkbox1.parentElement.setAttribute("data-error-visible", "true")
+        return false
+    }
+    checkbox1.parentElement.setAttribute("data-error-visible", "false")
     return true;
 }
+
+// Quels champs à verifier //
+const checkFields = (element, method, event) => {
+    element.addEventListener(event, method)
+}
+
+// Ajout d'evenement au formulaire //
+checkFields(prenom, checkFirstName, "focusout")
+checkFields(nom, checkLastName, "focusout")
+checkFields(email, checkEmail,"focusout")
+checkFields(quantity, checkTypeNumber,"focusout")
+checkFields(birthdate, checkBirthday,"focusout")
+checkFields(citySelector, checkCity,"change")
+checkFields(checkbox1, checkboxChecked,"change")
+
+// Verification de tous les champs //
+const checkAllFields = () => {
+    checkFirstName()
+    checkLastName()
+    checkEmail()
+    checkTypeNumber()
+    checkBirthday()
+    checkCity()
+    checkboxChecked()
+}
+
+// Validation de tous les champs //
+const finalValidation = () => {
+    if(checkFirstName() === true &&
+        checkLastName() === true &&
+        checkEmail() === true &&
+        checkTypeNumber() === true &&
+        checkBirthday() === true &&
+        checkCity() === true &&
+        checkboxChecked() === true) {
+            return true
+    }
+    return false
+}
+
+
+// Soumission du formulaire //
+form.addEventListener("submit", (e) => {
+    // Bloque le raffrechissement de la page //
+    e.preventDefault()
+    if (finalValidation() === true) {
+        
+        launchModalSubmittedForm()
+        // Efface les champs apres soumission //
+        document.querySelector("form").reset();
+    }else {
+        // Affiche les champs non et mal rempli //
+        checkAllFields()
+    }
+});
