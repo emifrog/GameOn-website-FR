@@ -13,7 +13,8 @@ const input = document.getElementsByClassName("text-control");
 
 // Verification Prenom //
 const checkFirstName = () => {
-    if( prenom.value.trim().length < 2 || prenom.value.trim() === ""){
+    let regexPrenom = /^[a-zA-Z]+ [a-zA-Z]+$/
+    if( prenom.value.trim().length < 2 || prenom.value.trim() === "" || !prenom.value.trim().match(regexPrenom)){
         prenom.parentElement.setAttribute("data-error-visible", "true")
         return false
     }
@@ -23,7 +24,8 @@ const checkFirstName = () => {
 
 // Verification Nom //
 const checkLastName = () => {
-    if( nom.value.trim().length < 2 || nom.value.trim() === ""){
+    let regexNom = /^[a-zA-Z]+ [a-zA-Z]+$/
+    if( nom.value.trim().length < 2 || nom.value.trim() === "" || !nom.value.trim().match(regexNom)){
         nom.parentElement.setAttribute("data-error-visible", "true")
         return false
     }
